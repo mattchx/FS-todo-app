@@ -16,7 +16,6 @@ const ListTodo = () => {
   }, []);
 
   const deleteTodo = async id => {
-    console.log(typeof id);
     try {
       await axios.delete(`http://localhost:5000/todos/${id}`);
       setTodos(todos.filter(todo => todo.todo_id !== id));
