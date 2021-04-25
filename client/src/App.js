@@ -3,17 +3,10 @@ import {
   ChakraProvider,
   Center,
   theme,
-  FormControl,
-  FormLabel,
   Box,
-  FormHelperText,
-  Input,
-  Button,
-  Flex,
-  useStyleConfig,
+  
 } from '@chakra-ui/react';
 import axios from 'axios';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
 import InputTodo from './components/InputTodo';
 import ListTodos from './components/ListTodos';
 
@@ -31,7 +24,7 @@ function App() {
   }, []);
 
   const handleAddTodo = () => {
-    fetchTodos()
+    fetchTodos();
   };
 
   const handleDeleteTodo = id => {
@@ -42,7 +35,6 @@ function App() {
     <ChakraProvider theme={theme}>
       <Center>
         <Box width={500}>
-          <ColorModeSwitcher />
           <InputTodo handleAddTodo={handleAddTodo} />
           <Center>
             <ListTodos todos={todos} handleDeleteTodo={handleDeleteTodo} />

@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { FormControl, FormLabel, Input, Button, Flex } from '@chakra-ui/react';
+import { ColorModeSwitcher } from '../ColorModeSwitcher';
+
 import axios from 'axios'
 const InputTodo = ({handleAddTodo}) => {
   const [description, setDescription] = useState('');
@@ -19,7 +21,11 @@ const InputTodo = ({handleAddTodo}) => {
   return (
     <form onSubmit={submitFormHandler}>
       <FormControl id="email">
+        <Flex align="center">
+        
         <FormLabel fontSize="4xl">To Do</FormLabel>
+        <ColorModeSwitcher />
+        </Flex>
         <Flex>
           <Input
             value={description}
