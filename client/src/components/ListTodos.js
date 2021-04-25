@@ -1,5 +1,13 @@
 import { Fragment } from 'react';
-import { Divider, Flex, Button, Spacer, Box, Text } from '@chakra-ui/react';
+import {
+  Divider,
+  Flex,
+  Button,
+  Spacer,
+  Box,
+  Text,
+  chakra,
+} from '@chakra-ui/react';
 import axios from 'axios';
 import styled from '@emotion/styled';
 
@@ -34,32 +42,39 @@ const ListTodo = ({ todos, handleDeleteTodo, handleCompletedTodo }) => {
             <Fragment key={item.todo_id}>
               <Flex mt={3}>
                 {!item.complete ? (
-                    <>
-                  <P
-                    onClick={() => todoIsComplete(item.todo_id, item.complete)}
-                  >
-                    {item.description}
-                  </P>
-                  <Spacer />
-                  <Button
-                    onClick={() => deleteTodo(item.todo_id)}
-                    size="xs"
-                    colorScheme="red"
-                  >
-                    Delete
-                  </Button>
+                  <>
+                    <chakra.p cursor="pointer">
+                      <Text
+                        onClick={() =>
+                          todoIsComplete(item.todo_id, item.complete)
+                        }
+                      >
+                        {item.description}
+                      </Text>
+                    </chakra.p>
+                    <Spacer />
+                    <Button
+                      onClick={() => deleteTodo(item.todo_id)}
+                      size="xs"
+                      colorScheme="red"
+                    >
+                      Delete
+                    </Button>
                   </>
                 ) : (
-                  <P
-                    complete
-                    color="gray"
-                    as="s"
-                    onClick={() => todoIsComplete(item.todo_id, item.complete)}
-                  >
-                    {item.description}
-                  </P>
+                  <chakra.p cursor="pointer">
+                    <Text
+                      complete
+                      color="gray"
+                      as="s"
+                      onClick={() =>
+                        todoIsComplete(item.todo_id, item.complete)
+                      }
+                    >
+                      {item.description}
+                    </Text>
+                  </chakra.p>
                 )}
-                
               </Flex>
               <Divider m={3} />
             </Fragment>
@@ -70,13 +85,3 @@ const ListTodo = ({ todos, handleDeleteTodo, handleCompletedTodo }) => {
 };
 
 export default ListTodo;
-
-const P = styled.p`
-  color: ${props => (props.complete ? 'grey' : 'black')};
-  text-decoration: ${props => (props.complete ? 'line-through' : 'none')};
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-
