@@ -19,15 +19,19 @@ const ListTodo = ({ todos, handleDeleteTodo, handleCompletedTodo }) => {
       console.log(err.message);
     }
   };
-  const todoIsComplete = async (id, complete) => {
-    // console.log(e);
-    const isComplete = complete ? 'false' : 'true';
+  const todoIsComplete = async (id, complete) => { 
+    
+    const toggle = !complete
+    
+    // console.log(toggle);
+    //const isComplete = toggle ? 'false' : 'true';
     // console.log(id);
     try {
-      await axios.put(`http://localhost:5000/todos/${id}`, {
-        complete: isComplete,
+      const res = await axios.put(`http://localhost:5000/todos/${id}`, {
+        complete: toggle.toString(),
       });
-      handleCompletedTodo(id, complete);
+      console.log(res.data)
+      handleCompletedTodo(id, toggle);
     } catch (err) {
       console.log(err.message);
     }
@@ -42,7 +46,7 @@ const ListTodo = ({ todos, handleDeleteTodo, handleCompletedTodo }) => {
               <Flex mt={3}>
                 {!item.complete ? (
                   <>
-                    <chakra.p cursor="pointer">
+                    <chakra.span cursor="pointer">
                       <Text
                         onClick={() =>
                           todoIsComplete(item.todo_id, item.complete)
@@ -50,7 +54,7 @@ const ListTodo = ({ todos, handleDeleteTodo, handleCompletedTodo }) => {
                       >
                         {item.description}
                       </Text>
-                    </chakra.p>
+                    </chakra.span>
                     <Spacer />
                     <Button
                       onClick={() => deleteTodo(item.todo_id)}
@@ -61,7 +65,7 @@ const ListTodo = ({ todos, handleDeleteTodo, handleCompletedTodo }) => {
                     </Button>
                   </>
                 ) : (
-                  <chakra.p cursor="pointer">
+                  <chakra.span cursor="pointer">
                     <Text
                       complete
                       color="gray"
@@ -72,7 +76,7 @@ const ListTodo = ({ todos, handleDeleteTodo, handleCompletedTodo }) => {
                     >
                       {item.description}
                     </Text>
-                  </chakra.p>
+                  </chakra.span>
                 )}
               </Flex>
               <Divider m={3} />

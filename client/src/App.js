@@ -24,12 +24,11 @@ function App() {
   const handleDeleteTodo = id => {
     setTodos(todos.filter(todo => todo.todo_id !== id));
   };
-
-  const handleCompletedTodo = (id, isComplete) => {
+  const handleCompletedTodo = (id, toggle) => {
     setTodos(
       todos.map(todo => {
         if (todo.todo_id === id) {
-          return { ...todo, complete: !isComplete };
+          return { ...todo, complete: toggle };
         }
         return todo;
       })
@@ -42,7 +41,6 @@ function App() {
         <Box width={500}>
           <InputTodo handleAddTodo={handleAddTodo} />
           <Center>
-            
             <ListTodos
               todos={todos}
               handleDeleteTodo={handleDeleteTodo}
