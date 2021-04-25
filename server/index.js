@@ -12,7 +12,7 @@ app.use(express.json()); // => allows us to access the req.body
 
 app.get('/todos', async (req, res) => {
   try {
-    const allTodos = await pool.query('SELECT * FROM todo');
+    const allTodos = await pool.query('SELECT * FROM todo ORDER BY todo_id');
 
     res.json(allTodos.rows);
   } catch (err) {
