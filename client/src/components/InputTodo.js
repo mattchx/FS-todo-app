@@ -1,27 +1,37 @@
-import React from 'react';
-import {
-  ChakraProvider,
-  Center,
-  theme,
-  FormControl,
-  FormLabel,
-  Box,
-  FormHelperText,
-  Input,
-  Button,
-  Flex,
-  useStyleConfig,
-} from '@chakra-ui/react';
-
+import { useState } from 'react';
+import { FormControl, FormLabel, Input, Button, Flex } from '@chakra-ui/react';
+import axios from 'axios'
 const InputTodo = () => {
+  const [description, setDescription] = useState('');
+
+  const submitFormHandler = e => {
+    e.preventDefault();
+    console.log(description);
+    try {
+        axios.post('http://localhost:5000/todos', {description})
+    } catch(err) {
+        console.log(err.message)
+    }
+    setDescription('');
+  };
+
   return (
-    <FormControl id="email">
-      <FormLabel fontSize="4xl">To Do</FormLabel>
-      <Flex>
-        <Input type="text" placeholder="What needs to be done?" />
-        <Button colorScheme="teal">Add</Button>
-      </Flex>
-    </FormControl>
+    <form onSubmit={submitFormHandler}>
+      <FormControl id="email">
+        <FormLabel fontSize="4xl">To Do</FormLabel>
+        <Flex>
+          <Input
+            value={description}
+            onChange={e => setDescription(e.target.value)}
+            type="text"
+            placeholder="What needs to be done?"
+          />
+          <Button type="submit" colorScheme="teal">
+            Add
+          </Button>
+        </Flex>
+      </FormControl>
+    </form>
   );
 };
 
