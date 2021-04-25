@@ -8,7 +8,7 @@ const InputTodo = ({handleAddTodo}) => {
 
   const submitFormHandler = e => {
     e.preventDefault();
-    console.log(description);
+    if (description === "") return  console.log("enter a value")
     try {
         axios.post('http://localhost:5000/todos', {description})
         handleAddTodo(description)
