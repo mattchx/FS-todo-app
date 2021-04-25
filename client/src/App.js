@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ChakraProvider, Center, theme, Box, chakra } from '@chakra-ui/react';
+import { ChakraProvider, Center, theme, Box } from '@chakra-ui/react';
 import axios from 'axios';
 import InputTodo from './components/InputTodo';
 import ListTodos from './components/ListTodos';
@@ -15,7 +15,6 @@ function App() {
 
   useEffect(() => {
     fetchTodos();
-    console.log(todos);
   }, []);
 
   const handleAddTodo = () => {

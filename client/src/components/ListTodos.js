@@ -9,7 +9,6 @@ import {
   chakra,
 } from '@chakra-ui/react';
 import axios from 'axios';
-import styled from '@emotion/styled';
 
 const ListTodo = ({ todos, handleDeleteTodo, handleCompletedTodo }) => {
   const deleteTodo = async id => {
