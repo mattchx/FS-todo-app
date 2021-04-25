@@ -47,19 +47,20 @@ app.post('/todos', async (req, res) => {
   }
 });
 
-// update a todo
+// update a todo as complete
 app.put('/todos/:id', async (req, res) => {
     try {
       const { id } = req.params;
-      const { description } = req.body;
+      const { complete } = req.body;
 
       const todo = await pool.query(
-          'UPDATE todo SET description = ($1) WHERE todo_id = ($2) RETURNING *;', [description, id]) 
+          'UPDATE todo SET complete = ($1) WHERE todo_id = ($2) RETURNING *;', [complete, id]) 
       res.json(todo.rows[0]);
     } catch (err) {
       console.error(err.message);
     }
   });
+
 // delete a todo
 app.delete('/todos/:id', async (req, res) => {
     try {
