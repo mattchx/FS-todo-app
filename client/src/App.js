@@ -13,6 +13,7 @@ import {
   useStyleConfig,
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
+import InputTodo from './components/InputTodo';
 import ListTodos from './components/ListTodos';
 
 function App() {
@@ -21,13 +22,7 @@ function App() {
       <Center>
         <Box width={500}>
           <ColorModeSwitcher />
-          <FormControl id="email">
-            <FormLabel fontSize="4xl">To Do</FormLabel>
-            <Flex>
-              <Input type="text" placeholder="What needs to be done?" />
-              <Button colorScheme="teal">Add</Button>
-            </Flex>
-          </FormControl>
+          <InputTodo />
           <ListTodos />
         </Box>
       </Center>
