@@ -1,5 +1,5 @@
 import { useEffect, useState, Fragment } from 'react';
-import { Divider } from '@chakra-ui/react';
+import { Divider, Flex, Button, Spacer, Box } from '@chakra-ui/react';
 import axios from 'axios';
 const ListTodo = () => {
   const [todos, setTodos] = useState(null);
@@ -15,17 +15,23 @@ const ListTodo = () => {
   }, []);
 
   return (
-    <div>
+    <Box minW={300}>
       {todos &&
         todos.map(item => {
           return (
-            <Fragment key={item.todo_id}>
-              <p>{item.description}</p>
-              <Divider />
-            </Fragment>
+            <Fragment key={item.todo_id} >
+              <Flex mt={2}>
+                <p>{item.description}</p>
+                <Spacer />
+                <Button size="xs" colorScheme="red">
+                  Delete
+                </Button>
+              </Flex>
+              <Divider m={3}/>
+            </Fragment >
           );
         })}
-    </div>
+    </Box>
   );
 };
 
