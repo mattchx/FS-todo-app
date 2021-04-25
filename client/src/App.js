@@ -23,7 +23,9 @@ function App() {
         <Box width={500}>
           <ColorModeSwitcher />
           <InputTodo />
-          <ListTodos />
+          <Center>
+            <ListTodos />
+          </Center>
         </Box>
       </Center>
     </ChakraProvider>
