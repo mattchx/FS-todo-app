@@ -20,7 +20,7 @@ const ListTodo = () => {
         todos.map(item => {
           return (
             <Fragment key={item.todo_id} >
-              <Flex mt={2}>
+              <Flex mt={3}>
                 <p>{item.description}</p>
                 <Spacer />
                 <Button size="xs" colorScheme="red">
