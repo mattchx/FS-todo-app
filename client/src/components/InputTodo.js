@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FormControl, FormLabel, Input, Button, Flex } from '@chakra-ui/react';
 import axios from 'axios'
-const InputTodo = () => {
+const InputTodo = ({handleAddTodo}) => {
   const [description, setDescription] = useState('');
 
   const submitFormHandler = e => {
@@ -9,6 +9,7 @@ const InputTodo = () => {
     console.log(description);
     try {
         axios.post('http://localhost:5000/todos', {description})
+        handleAddTodo(description)
     } catch(err) {
         console.log(err.message)
     }

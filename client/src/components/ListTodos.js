@@ -1,24 +1,12 @@
-import { useEffect, useState, Fragment } from 'react';
+import { Fragment } from 'react';
 import { Divider, Flex, Button, Spacer, Box } from '@chakra-ui/react';
 import axios from 'axios';
 
-const ListTodo = () => {
-  const [todos, setTodos] = useState([]);
-
-  const fetchTodos = async () => {
-    const res = await axios.get('http://localhost:5000/todos');
-    //console.log(res.data);
-    setTodos(res.data);
-  };
-
-  useEffect(() => {
-    fetchTodos();
-  }, []);
-
+const ListTodo = ({todos, handleDeleteTodo}) => {
   const deleteTodo = async id => {
     try {
       await axios.delete(`http://localhost:5000/todos/${id}`);
-      setTodos(todos.filter(todo => todo.todo_id !== id));
+      handleDeleteTodo(id);
     } catch (err) {
       console.log(err.message);
     }
