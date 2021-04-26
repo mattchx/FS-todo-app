@@ -14,21 +14,22 @@ function App() {
   };
 
   useEffect(() => {
+    console.error('useEffect runs');
     fetchTodos();
   }, []);
 
-  const handleAddTodo = () => {
-    fetchTodos();
+  const handleAddTodo = data => {
+    setTodos([...todos, data]);
   };
 
   const handleDeleteTodo = id => {
     setTodos(todos.filter(todo => todo.todo_id !== id));
   };
-  const handleCompletedTodo = (id, toggle) => {
+  const handleCompletedTodo = item => {
     setTodos(
       todos.map(todo => {
-        if (todo.todo_id === id) {
-          return { ...todo, complete: toggle };
+        if (todo.todo_id === item.todo_id) {
+          return item;
         }
         return todo;
       })
