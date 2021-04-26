@@ -14,22 +14,22 @@ function App() {
   };
 
   useEffect(() => {
-    console.error('useEffect runs');
+      console.error('useEffect runs')
     fetchTodos();
   }, []);
 
-  const handleAddTodo = data => {
-    setTodos([...todos, data]);
+  const handleAddTodo = (data) => {
+      setTodos([...todos, data])
   };
 
   const handleDeleteTodo = id => {
     setTodos(todos.filter(todo => todo.todo_id !== id));
   };
-  const handleCompletedTodo = item => {
+  const handleCompletedTodo = (item) => {
     setTodos(
       todos.map(todo => {
         if (todo.todo_id === item.todo_id) {
-          return item;
+          return item
         }
         return todo;
       })
@@ -38,7 +38,7 @@ function App() {
 
   return (
     <ChakraProvider theme={theme}>
-      <Center>
+      <Center mt={20}>
         <Box width={500}>
           <InputTodo handleAddTodo={handleAddTodo} />
           <Center>
