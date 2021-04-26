@@ -11,7 +11,6 @@ import {
 import axios from 'axios';
 
 const ListTodo = ({ todos, handleDeleteTodo, handleCompletedTodo }) => {
-    
   const deleteTodo = async id => {
     try {
       await axios.delete(`http://localhost:5000/todos/${id}`);
@@ -20,13 +19,13 @@ const ListTodo = ({ todos, handleDeleteTodo, handleCompletedTodo }) => {
       console.log(err.message);
     }
   };
-  const todoIsComplete = async (id, complete) => { 
-    const toggle = !complete
+  const todoIsComplete = async (id, complete) => {
+    const toggle = !complete;
     try {
       const res = await axios.put(`http://localhost:5000/todos/${id}`, {
         complete: toggle.toString(),
       });
-      handleCompletedTodo(res.data)
+      handleCompletedTodo(res.data);
     } catch (err) {
       console.log(err.message);
     }
