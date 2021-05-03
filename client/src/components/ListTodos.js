@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import {
   Divider,
   Flex,
@@ -7,10 +7,22 @@ import {
   Box,
   Text,
   chakra,
+  Input,
 } from '@chakra-ui/react';
 import axios from 'axios';
 
-const ListTodo = ({ todos, handleDeleteTodo, handleCompletedTodo }) => {
+const ListTodo = ({
+  todos,
+  handleDeleteTodo,
+  handleCompletedTodo,
+  handleEditingState,
+  handleUpdatedTodo,
+}) => {
+  const initalTempTodos = todos.reduce((acc, cur) => {
+    return { ...acc, [cur.todo_id]: cur.description };
+  }, {});
+  const [todosTempDesc, setTodosTempDesc] = useState(initalTempTodos);
+
   const deleteTodo = async id => {
     try {
       await axios.delete(`http://localhost:5000/todos/${id}`);
@@ -22,10 +34,35 @@ const ListTodo = ({ todos, handleDeleteTodo, handleCompletedTodo }) => {
   const todoIsComplete = async (id, complete) => {
     const toggle = !complete;
     try {
-      const res = await axios.put(`http://localhost:5000/todos/${id}`, {
-        complete: toggle.toString(),
-      });
+      const res = await axios.put(
+        `http://localhost:5000/todos/complete/${id}`,
+        {
+          complete: toggle.toString(),
+        }
+      );
       handleCompletedTodo(res.data);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  const editTodo = id => {
+    handleEditingState(id, true);
+  };
+
+  const closeEdit = id => {
+    handleEditingState(id, false);
+  };
+
+  const saveEdit = async (e, id) => {
+    e.preventDefault();
+    const newText = todosTempDesc[`${id}`];
+    console.log(newText);
+    try {
+      const res = await axios.put(`http://localhost:5000/todos/update/${id}`, {
+        description: newText,
+      });
+      handleUpdatedTodo(res.data);
     } catch (err) {
       console.log(err.message);
     }
@@ -38,7 +75,33 @@ const ListTodo = ({ todos, handleDeleteTodo, handleCompletedTodo }) => {
           return (
             <Fragment key={item.todo_id}>
               <Flex mt={3}>
-                {!item.complete ? (
+                {!item.complete && item.editing ? (
+                  <>
+                    <form onSubmit={e => saveEdit(e, item.todo_id)}>
+                      <Input
+                        value={todosTempDesc[item.todo_id]}
+                        type="text"
+                        onChange={e =>
+                          setTodosTempDesc({
+                            ...todosTempDesc,
+                            [item.todo_id]: e.target.value,
+                          })
+                        }
+                      />
+                      <Spacer />
+                      <Button type="submit" size="xs" colorScheme="linkedin">
+                        Save
+                      </Button>
+                      <Button
+                        onClick={() => closeEdit(item.todo_id)}
+                        size="xs"
+                        colorScheme="blackAlpha"
+                      >
+                        Cancel
+                      </Button>
+                    </form>
+                  </>
+                ) : !item.complete ? (
                   <>
                     <chakra.span cursor="pointer">
                       <Text
@@ -50,6 +113,13 @@ const ListTodo = ({ todos, handleDeleteTodo, handleCompletedTodo }) => {
                       </Text>
                     </chakra.span>
                     <Spacer />
+                    <Button
+                      onClick={() => editTodo(item.todo_id)}
+                      size="xs"
+                      colorScheme="yellow"
+                    >
+                      Edit
+                    </Button>
                     <Button
                       onClick={() => deleteTodo(item.todo_id)}
                       size="xs"
