@@ -9,29 +9,57 @@ function App() {
 
   const fetchTodos = async () => {
     const res = await axios.get('http://localhost:5000/todos');
-    //console.log(res.data);
-    setTodos(res.data);
+    const todosState = res.data.map(item => ({
+      ...item,
+      editing: false,
+    }));
+    console.log(todosState);
+    setTodos(todosState);
   };
 
   useEffect(() => {
-      console.error('useEffect runs')
+    console.error('useEffect runs');
     fetchTodos();
   }, []);
 
-  const handleAddTodo = (data) => {
-      setTodos([...todos, data])
+  const handleAddTodo = data => {
+    setTodos([...todos, data]);
   };
 
   const handleDeleteTodo = id => {
     setTodos(todos.filter(todo => todo.todo_id !== id));
   };
-  const handleCompletedTodo = (item) => {
+  const handleCompletedTodo = item => {
     setTodos(
       todos.map(todo => {
         if (todo.todo_id === item.todo_id) {
-          return item
+          return item;
         }
         return todo;
+      })
+    );
+  };
+
+  const handleEditingState = (id, state) => {
+    setTodos(
+      todos.map(item => {
+        if (item.todo_id === id) {
+          return { ...item, editing: state };
+        }
+        return item;
+      })
+    );
+  };
+
+  const handleUpdatedTodo = todo => {
+    console.log(todo);
+    setTodos(
+      todos.map(item => {
+        if (item.todo_id === todo.todo_id) {
+          return todo;
+        } else {
+          return item;
+        }
       })
     );
   };
@@ -46,6 +74,8 @@ function App() {
               todos={todos}
               handleDeleteTodo={handleDeleteTodo}
               handleCompletedTodo={handleCompletedTodo}
+              handleEditingState={handleEditingState}
+              handleUpdatedTodo={handleUpdatedTodo}
             />
           </Center>
         </Box>
@@ -55,5 +85,3 @@ function App() {
 }
 
 export default App;
-
-//border-radius: 15px 50px 30px 5px
